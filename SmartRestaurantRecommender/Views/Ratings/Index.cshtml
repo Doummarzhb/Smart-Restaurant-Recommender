@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Rating>
+
+<h2>Ratings List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Stars</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rating in Model)
+        {
+            <tr>
+                <td>@rating.UserId</td>
+                <td>@rating.Stars</td>
+                <td>@rating.Comment</td>
+                <td>@rating.CreatedAt.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

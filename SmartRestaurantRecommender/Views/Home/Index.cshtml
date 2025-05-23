@@ -1,0 +1,41 @@
+﻿@model List<Restaurant>
+
+<h2>Restaurant Recommendations</h2>
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var restaurant = Model[i];
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@restaurant.Name</h5>
+                    <p class="card-text">Cuisine Type: @restaurant.Cuisine</p>
+                    <p class="card-text">Meal Time: @restaurant.MealTime</p>
+                    <p class="card-text">Location: @restaurant.Location</p>
+
+                    <div id="map-@i" style="height: 200px;"></div>
+                    <script>
+                        function initMap@i() {
+                            var geocoder = new google.maps.Geocoder();
+                            geocoder.geocode({ 'address': '@restaurant.Location' }, function (results, status) {
+                                if (status == 'OK') {
+                                    var map = new google.maps.Map(document.getElementById('map-@i'), {
+                                        zoom: 14,
+                                        center: results[0].geometry.location
+                                    });
+                                    var marker = new google.maps.Marker({
+                                        map: map,
+                                        position: results[0].geometry.location
+                                    });
+                                } else {
+                                    document.getElementById('map-@i').innerText = "Could not load map: " + status;
+                                }
+                            });
+                        }
+                        window.addEventListener('load', initMap@i);
+                    </script>
+                </div>
+            </div>
+        </div>
+    }
+</div>
